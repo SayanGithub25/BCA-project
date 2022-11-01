@@ -1,0 +1,92 @@
+﻿@model RestraurantADMIN.Models.SheduleWiseFood
+
+@{
+    ViewBag.Title = "SheduleWiseFood";
+    Layout = "~/Views/Shared/_RestaurantADMINLayout.cshtml";
+}
+<input type="hidden" id="hdnUserid" />
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-md-12">
+            <div class="card card-shadow mb-4">
+                <div class="card-header border-0">
+                    <div class="custom-title-wrap bar-primary">
+                        <div class="custom-title">@ViewBag.Title</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @*<a href="/Master/TableList" class="btn btn-info"style="color:white;">Table List</a><br /><br />*@
+
+                    @using (Html.BeginForm("SheduleWiseFood", "Master", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "form" }))
+                    {
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label><b>Choose Shedule :</b></label>
+                                    <select class="form-control" id="ddlSheduleId" name="param">
+                                        <option value="0">Select</option>
+                                        @foreach (var data in ViewBag.SheduleList)
+                                        {
+                                            <option value="@data.Pk_SheduleId">@data.SheduleName</option>
+                                        }
+
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label><b>Choose Category :</b></label>
+                                    <select class="form-control" id="ddlItemCategoryId" name="param" onchange="OnCatagoryWiseFood();">
+                                        <option value="0">Select</option>
+                                        @foreach (var data in ViewBag.CatagoryList)
+                                        {
+                                            <option value="@data.pk_intFoodItemCategoryId">@data.strCategoryName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label><b>Choose Item :</b></label>
+                                    <select class="form-control" id="ddlFoodItemId" name="param">
+                                        <option value="0">Select</option>
+                                        @foreach (var data in ViewBag.CatagoryListss)
+                                        {
+                                            <option value="@data.pk_intFoodItemId">@data.strFoodItemName</option>
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8"></div>
+                                <div class="col-md-4">
+                                    <div class="text-center" style="margin-top:30px;">
+                                        <button type="button" class="btn btn-success" onclick="AddOnclick();">Add</button>
+                                        <button type="button" class="btn btn-warning">Cancel</button>
+                                    </div>
+                                </div>
+                            </div><br />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table id="table" class="table table-bordered table-striped" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Shedule</th>
+                                                <th>Catagory</th>
+                                                <th>Food Item</th>
+                                                <th>Edit</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <input type="button" class="btn btn-facebook" id="btnSubmit" placeholder="" style="margin-top:30px;" onclick="InsertUpdateShedule();" value="Submit" name="" />
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+            </div>
+        <script src="~/Scripts/AppScript/SheduleWiseFood.js"></script>

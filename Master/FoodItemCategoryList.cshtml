@@ -1,0 +1,78 @@
+﻿@model RestraurantADMIN.Models.FoodItemCategoryMasters
+
+@{
+    ViewBag.Title = "FoodItemCategoryList";
+    Layout = "~/Views/Shared/_RestaurantADMINLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-md-12">
+            <div class="card card-shadow mb-4">
+                <div class="card-header border-0">
+                    <div class="custom-title-wrap bar-primary">
+                        <div class="custom-title">@ViewBag.Title</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <a href="/Master/FoodItemCategory" class="btn btn-info" style="color:white;">Add New</a><br /><br />
+
+                    <div class="table-responsive">
+                        <table id="data_table" class="table table-bordered table-striped" cellspacing="0">
+                            <thead>
+                                <tr style="text-align:center">
+                                    <th> Catagory Name</th>
+                                    <th>Catagory Code</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var data in Model.ListFoodItemCategory)
+                                {
+                                    <tr style="text-align:center">
+                                        <td>@data.strCategoryName</td>
+                                        <td>@data.strCategoryCode</td>
+                                        <td><input type="button" class="btn btn-success" value="Edit" onclick="Edit(@data.pk_intFoodItemCategoryId)" /></td>
+                                        <td><input type="button" class="btn btn-danger" value="Delete"onclick="Delete(@data.pk_intFoodItemCategoryId)" /></td>
+
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    function btnInsUp() {
+        if (validation() == true) {
+            document.getElementById('form').submit();
+        }
+    }
+    function validation() {
+        if ($('#txtTableNo').val() == '') {
+            toastr.warning('Fill Table Name.')
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    function Edit(pk_intFoodItemCategoryId) {
+        location.href = "/Master/FoodItemCategory?id=" +pk_intFoodItemCategoryId
+    }
+    function Delete(pk_intFoodItemCategoryId)
+    {
+        var id=confirm("Are You Sure");
+        if(id=true)
+        {
+            location.href="/Master/FoodItemCategoryDelete?id="+pk_intFoodItemCategoryId
+        }
+    }
+</script>
+

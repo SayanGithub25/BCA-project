@@ -1,0 +1,76 @@
+﻿@model  RestraurantADMIN.Models.StockinMaster
+
+@{
+    ViewBag.Title = "StockInMaster";
+    Layout = "~/Views/Shared/_RestaurantADMINLayout.cshtml";
+}
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-md-12">
+            <div class="card card-shadow mb-4">
+                <div class="card-header border-0">
+                    <div class="custom-title-wrap bar-primary">
+                        <div class="custom-title">@ViewBag.Title</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("StockInMaster", "Master", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "form" }))
+                    {
+                        <input type="hidden" id="hdnFoodItemId" name="hdnFoodItemId" />
+                        <input type="hidden" id="hdnTakeAwayRate" name="hdnTakeAwayRate" />
+                        <input type="hidden" id="hdnDeliveryRate" name="hdnDeliveryRate" />
+                        <input type="hidden" id="hdnFoodCount" name="hdnFoodCount" />
+                        <div class="">
+                            <table id="stockTable" class="table table-bordered table-striped" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th> Food Name</th>
+                                        <th> Delivary Rate</th>
+                                        <th> Take Away Rate</th>
+                                        <th> Total Item</th>
+                                        <th> </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var data in Model.ListStockinFooditem)
+                                    {
+                                        <tr>
+                                            <td style="display:none;">@data.pk_intFoodItemId</td>
+                                            <td>@data.strFoodItemName</td>
+                                            <td><input type="number" class="form-control" id="decDeliveryRate" name="decDeliveryRate" value="@data.decDeliveryRate" /></td>
+                                            <td><input type="number" class="form-control" id="decTakeAwayRate" name="decTakeAwayRate" value="@data.decTakeAwayRate" /></td>
+                                            <td><input type="number" class="form-control" id="TotalFoodCount" name="TotalFoodCount" value="@data.TotalFoodCount" /></td>
+                                            <td><button type="button" class="btn btn-purple" onclick="btnUp(this)">Update</button></td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="~/Scripts/AppScript/StockinMaster.js"></script>
+@*<script>
+        function btnInsUp() {
+            if (validation() == true) {
+                document.getElementById('form').submit();
+            }
+        }
+        function validation() {
+
+            return true;
+        }
+
+        function Edit(pk_intFoodItemId) {
+            location.href = "/Master/stockInMaster?id=" + StockInId
+        }
+    </script>*@

@@ -1,0 +1,62 @@
+﻿@model RestraurantADMIN.Models.TableBookingMasters
+@{
+    ViewBag.Title = "TableList";
+    Layout = "~/Views/Shared/_RestaurantADMINLayout.cshtml";
+}
+<input type="hidden" id="hdnId" />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-md-12">
+            <div class="card card-shadow mb-4">
+                <div class="card-header border-0">
+                    <div class="custom-title-wrap bar-primary">
+                        <div class="custom-title">@ViewBag.Title</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <a href="/Master/Table" class="btn btn-info" style="color:white;">Add New</a><br /><br />
+
+                    <div class="table-responsive">
+                        <table id="data_table" class="table table-bordered table-striped" cellspacing="0">
+                            <thead>
+                                <tr style="text-align:center">
+                                    <th> Table Name</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var data in Model.ListTableBooking)
+                                {
+                                    <tr style="text-align:center">
+                                        <td>@data.strTableNo</td>
+                                        <td><input type="button" class="btn btn-success" value="Edit" onclick="Edit(@data.pk_intTableBookingId)" /></td>
+                                        <td><input type="button" class="btn btn-danger" value="Delete"onclick="Delete(@data.pk_intTableBookingId)" /></td>
+
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function Edit(pk_intTableBookingId)
+    {
+        location.href="/Master/Table?id="+pk_intTableBookingId
+    }
+    function Delete(pk_intTableBookingId)
+    {
+        var id=confirm("Are You Sure");
+        if(id=true)
+        {
+            location.href="/Master/TableDelete?id="+pk_intTableBookingId
+        }
+    }
+</script>

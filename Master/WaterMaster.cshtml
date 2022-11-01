@@ -1,0 +1,86 @@
+﻿
+@model  RestraurantADMIN.Models.WaiterMaster
+@{
+    ViewBag.Title = "WaterMaster";
+    Layout = "~/Views/Shared/_RestaurantADMINLayout.cshtml";
+}
+
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-md-6">
+            <div class="card card-shadow mb-4">
+                <div class="card-header border-0">
+                    <div class="custom-title-wrap bar-primary">
+                        <div class="custom-title">@ViewBag.Title </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <a href="/Master/WaterMasterList" class="btn btn-info" style="color:white;">Water List</a><br /><br />
+
+                    @using (Html.BeginForm("WaterMaster", "Master", new { area = "" }, FormMethod.Post, new { @class = "", id = "myForm", role = "form", autocomplete = "off", enctype = "multipart/form-data" }))
+                    {
+                        <div class="row">
+                            <div class="col-xl-4 col-md-12">
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control" id="strWaiterName" name="hdnId" value="@Model.pk_intWaiterId" />
+
+                                    <label for="exampleInputEmail1">Waiter Name</label>
+                                    <input type="text" class="form-control" id="strWaiterName" name="strWaiterName" value="@Model.strWaiterName" placeholder="Enter Name">
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Mobail Number</label>
+                                    <input type="number" class="form-control" id="strWaiterPhone" name="strWaiterPhone" value="@Model.strWaiterPhone" placeholder="Enter Mobail Number">
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-12" style="margin-top:30px;">
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-success" onclick="btnInsUp()">Submit</button>
+                                    <button type="submit" class="btn btn-warning" onclick="Refresh()">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                        <small style="color:red;">@ViewBag.Result</small>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+
+    //function Refresh() {
+    //    location.reload();
+    //}
+    function btnInsUp() {
+        if (Validation() == true) {
+            document.getElementById("myForm").submit();
+        }
+    }
+    function Validation() {
+        if ($("#strWaiterName").val() == "") {
+            alert("plese Enter Waiter Name")
+            return false;
+        }
+        if ($("#strWaiterPhone").val() =="") {
+            alert("plese enter your valid mobail nuber ")
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+
+
+
+
+        return true;
+    }
+
+</script>
+

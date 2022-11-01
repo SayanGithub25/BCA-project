@@ -1,0 +1,195 @@
+﻿@model  RestraurantADMIN.Models.FoodItemMasters
+
+@{
+    ViewBag.Title = "ResturantService";
+    Layout = "~/Views/Shared/_RestaurantADMINLayout.cshtml";
+}
+
+<input type="hidden" id="decTaxCGSTAmount" />
+<input type="hidden" id="decTaxSGSTAmount" />
+<input type="hidden" id="hdnUserid" />
+<input type="hidden" id="hdnResSerId" />
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-md-12">
+            <div class="card card-shadow mb-4">
+                <div class="card-header border-0">
+                    <div class="custom-title-wrap bar-primary">
+                        <div class="custom-title">@ViewBag.Title</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <a href="/transaction/ResturantServiceList" class="btn btn-info" style="color:white;">Service List</a><br /><br />
+                    @using (Html.BeginForm("ResturantService", "transaction", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "form" }))
+                    {
+                        <input type="hidden" id="hdnFoodItemId" name="kotno" />
+                        <input type="hidden" id="hdnTakeAwayRate" name="billno" />
+                        <input type="hidden" id="hdnDeliveryRate" name="bdate" />
+                        <input type="hidden" id="hdnFoodCount" name="ddlTable" />
+                        <input type="hidden" id="hdnFoodCount" name="txtGuestName" />
+                        <input type="hidden" id="hdnFoodCount" name="ddlWaiterName" />
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>KOT No</label>
+                                    <input type="text" id="kotno" class="form-control"/>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Bill No</label>
+                                    <input type="text" id="billno" class="form-control" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Bill Date</label>
+                                    <input type="date" id="bdate" class="form-control" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Table</label>
+                                    <select class="form-control" id="ddlTable" name="param" aria-describedby="emailHelp">
+                                        <option value="0">Select</option>
+                                        @foreach (var item in ViewBag.TableItemList)
+                                        {
+
+                                            <option value="@item.pk_intTableBookingId">@item.strTableNo</option>
+
+                                        }
+
+                                    </select>
+                                </div>
+                            </div><br />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Item   Name</label>
+                                    <select class="form-control" id="ddlItemId" onchange="GetFoodItemRate();" name="param" aria-describedby="emailHelp">
+                                        <option value="0">Select</option>
+                                        @foreach (var item in ViewBag.CatagoryList)
+                                        {
+
+                                            <option value="@item.pk_intFoodItemId">@item.strFoodItemName</option>
+
+                                        }
+                                    </select>
+                                </div>
+                                <div class=col-md-4>
+                                    <label>Guest Name</label>
+                                    <input type="text" id="txtGuestName" class="form-control" />
+                                </div>
+                                <div class=col-md-4>
+                                    <label>Waiter Name</label>
+                                    <select class="form-control" id="ddlWaiterName" name="param" aria-describedby="emailHelp">
+                                        <option value="0">Select</option>
+                                        @foreach (var item in ViewBag.WaiterNameList)
+                                        {
+
+                                            <option value="@item.pk_intWaiterId">@item.strWaiterName</option>
+
+                                        }
+                                    </select>
+                                </div>
+                                
+                            </div><br />
+                            <div class="row">
+                                <div class=col-md-2>
+                                    <label>Qty</label>
+                                    <input type="text" class="form-control" id="txtQTY" placeholder="0" value=""  onkeyup="GetQueItemRate();"name="txtQTY" />
+                                </div>
+                                <div class=col-md-2>
+                                    <label>Rate</label>
+                                    <input type="text" class="form-control" id="txtRate" placeholder="" value=" "name="txtRate" />
+                                </div>
+                                <div class=col-md-2>
+                                    <label>Disc</label>
+                                    <input type="text" class="form-control" id="txtDis" placeholder="" onkeyup="GetQueItemRate();" value="" name="txtDis" />
+                                </div>
+                                <div class=col-md-2>
+                                    <label>CGST</label>
+                                    <input type="text" class="form-control" id="txtCGST" placeholder="" value="" name="" />
+                                </div>
+                                <div class=col-md-2>
+                                    <label>SGST</label>
+                                    <input type="text" class="form-control" id="txtSGST" placeholder="" value="" name="" />
+                                </div>
+                                <div class=col-md-2>
+                                    <label>Amount</label>
+                                    <input type="text" class="form-control" id="txtAmt" placeholder="" value="" name="" />
+                                </div>
+                            </div><br />
+                            <div class="row">
+                                <div class="col-md-8"></div>
+                                <div class="col-md-4"style="text-align:right">
+
+                                        <button type="button" class="btn btn-success" onclick="AddOnclick();">ADD</button>
+
+                                        @*<button type="button" class="btn btn-warning">Cancel</button>*@
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12"></div>
+                                <table id="AppendTable" class="table table-bordered table-striped" cellspacing="0">
+                                    <thead>
+                                        <tr style="text-align:center">
+                                            <th>Item</th>
+                                            <th>Qty</th>
+                                            <th>Rate</th>
+                                            <th>Disc</th>
+                                            <th>CGST(%)</th>
+                                            <th>SGST(%)</th>
+                                            <th>Amount</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    </table>
+                            </div>
+                            <div class="row">
+                                <div class=col-md-2>
+                                    <label>Total Amount</label>
+                                    <input type="text" class="form-control" id="txtTotalAmount" placeholder="" value="" name="" />
+                                </div>
+                                <div class=col-md-2>
+                                    <label>Total Discount</label>
+                                    <input type="text" class="form-control" id="txtTotalDis" placeholder="" value="" name="" />
+                                </div>
+                                <div class=col-md-2>
+                                    <label>CGST</label>
+                                    <input type="text" class="form-control" id="txtTotalCGST" placeholder="" value="" name="" />
+                                </div>
+                                <div class=col-md-2>
+                                    <label>SGST</label>
+                                    <input type="text" class="form-control" id="txtTotalSGST" placeholder="" value="" name="" />
+                                </div>
+                                <div class=col-md-2>
+                                    <label>Net Amount</label>
+                                    <input type="text" class="form-control" id="txtNetAmount" placeholder="" value="" name="" />
+                                </div>
+                                <div class=col-md-2>
+                                    @if (Model.pk_intFoodItemId > 0)
+                                    {
+                                    <input type="button" class="btn btn-facebook" id="btnSubmit" placeholder="" style="margin-top:30px;"  onclick="InsertUpdateRservice();"value="Update" name="" />
+                                        
+                                    }
+                                    else
+                                    {
+                                    <input type="button" class="btn btn-facebook" id="btnSubmit" placeholder="" style="margin-top:30px;"  onclick="InsertUpdateRservice();"value="Submit" name="" />
+                                        
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="~/Scripts/AppScript/ResturentService.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#ddlWaiterName").select2();
+        $("#ddlItemId").select2();
+        $("#txtQTY").select2();
+        $("#ddlTable").select2();
+    });
+</script>

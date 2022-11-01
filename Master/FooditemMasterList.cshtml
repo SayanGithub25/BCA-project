@@ -1,0 +1,64 @@
+﻿
+@model  RestraurantADMIN.Models.FoodItemMasters
+@{
+    ViewBag.Title = "FooditemMasterList";
+    Layout = "~/Views/Shared/_RestaurantADMINLayout.cshtml";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-md-12">
+            <div class="card card-shadow mb-4">
+                <div class="card-header border-0">
+                    <div class="custom-title-wrap bar-primary">
+                        <div class="custom-title">@ViewBag.Title</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <a href="/Master/FooditemMaster" class="btn btn-purple" style="color:white;">Add New</a><br /><br />
+                    <div class="table-responsive">
+                        <table id="data_table" class="table table-bordered table-striped" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th> Food Item Name</th>
+                                    <th> Food Item Catagory</th>
+                                    <th> Price</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var data in Model.ListFoodItemMasters)
+                                {
+                                    <tr>
+                                        <td>@data.strFoodItemName</td>
+                                        <td>@data.strCategoryName</td>
+                                        <td>@data.decDiningRate</td>
+                                        <td><input type="button" class="btn btn-success" value="Edit" onclick="Edit(@data.pk_intFoodItemId)" /></td>
+                                        <td><input type="button" class="btn btn-danger" value="Delete" onclick="Delete(@data.pk_intFoodItemId)"/></td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    function Edit(pk_intFoodItemId) {
+        location.href = "/Master/FooditemMaster?id=" + pk_intFoodItemId
+    }
+    function Delete(pk_intFoodItemId)
+    {
+        var id  =confirm("Are You Sure....");
+        if(id=true)
+        {
+            location.href = "/Master/FooditemDelete?id=" + pk_intFoodItemId
+
+        }
+    }
+</script>
+

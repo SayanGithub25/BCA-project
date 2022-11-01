@@ -1,0 +1,69 @@
+﻿@model  RestraurantADMIN.Models.RserviceBill
+
+@{
+    ViewBag.Title = "ResturantServiceList";
+    Layout = "~/Views/Shared/_RestaurantADMINLayout.cshtml";
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-md-12">
+            <div class="card card-shadow mb-4">
+                <div class="card-header border-0">
+                    <div class="custom-title-wrap bar-primary">
+                        <div class="custom-title">@ViewBag.Title</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <a href="/transaction/ResturantService" class="btn btn-purple" style="color:white;">Add New</a><br /><br />
+
+                    <div class="table-responsive">
+                        <table id="data_table" class="table table-bordered table-striped" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th> Bill No</th>
+                                    <th>Guest Name</th>
+                                    <th> Total Amount</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var data in Model.ListRserviceBill)
+                                {
+                                    <tr>
+                                        <td>@data.strBillNo</td>
+                                        <td>@data.strGuestName</td>
+                                        <td>@data.decTotalAmount</td>
+                                        <td><input type="button" class="btn btn-success" value="Edit" onclick="Edit(@data.pk_intRestrurentServiceId)" /></td>
+                                        <td><input type="button" class="btn btn-danger" value="Delete" /></td>
+                                        <td><input type="button" class="btn btn-example" onclick="billSearch(@data.pk_intRestrurentServiceId);" value="Bill Print" /></td>
+
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    function Edit(pk_intRestrurentServiceId) {
+        location.href = "/transaction/ResturantService/" + pk_intRestrurentServiceId
+    }
+    function billSearch(Id) {
+        var url = "/Reports/RestaurentBill.aspx?Id="+Id;
+        var WindowDimensions = "toolbars=no,menubar=no,location=no,titlebar=no,scrollbars=yes,resizable=yes,status=yes"
+        var PopUp = window.open(url, "MyReportWindow", WindowDimensions);
+        if (PopUp.outerWidth < screen.availWidth || PopUp.outerHeight < screen.availHeight) {
+            PopUp.moveTo(25, 50);
+            PopUp.resizeTo(screen.availWidth - 10, screen.availHeight - 10);
+        }
+    }
+</script>

@@ -1,0 +1,74 @@
+﻿@model RestraurantADMIN.Models.TableBookingMasters
+@{
+    ViewBag.Title = "Table Master";
+    Layout = "~/Views/Shared/_RestaurantADMINLayout.cshtml";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-md-12">
+            <div class="card card-shadow mb-4">
+                <div class="card-header border-0">
+                    <div class="custom-title-wrap bar-primary">
+                        <div class="custom-title">@ViewBag.Title</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <a href="/Master/TableList" class="btn btn-info" style="color:white;">Table List</a><br /><br />
+                    
+                @using (Html.BeginForm("Table", "Master", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form",id="form" }))
+                {
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-4">
+                                    <input type="hidden" id="txtTableNo" name="hdnId" value="@Model.pk_intTableBookingId" />
+
+                                    <label for="exampleInputEmail1">Table Name</label>
+                                    <input type="text" class="form-control" value="@Model.strTableNo" id="txtTableNo" name="txtTableNo" aria-describedby="emailHelp" placeholder="Table Name">
+                               <small style="color:red;">@ViewBag.Result</small>
+                                 </div>
+                                <div class="col-md-3">
+                                    <div class="text-center" style="margin-top:30px;">
+                                        @if(Model.pk_intTableBookingId >0)
+                                        {
+                                        <button type="button" class="btn btn-purple" onclick="btnInsUp();">Update</button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-success" onclick="btnInsUp();">Submit</button>
+                                        }
+                                        <button type="button" class="btn btn-warning">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                      
+                }
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<script>
+    function btnInsUp()
+    {
+        if (validation() == true) {
+            document.getElementById('form').submit();
+        }
+    }
+    function validation() {
+        if ($('#txtTableNo').val() == '') {
+            toastr.warning('Fill Table Name.')
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    function Edit(pk_intTableBookingId)
+    {
+        location.href="/Master/Table"+pk_intTableBookingId
+    }
+</script>

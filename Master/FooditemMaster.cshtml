@@ -1,0 +1,220 @@
+﻿@model  RestraurantADMIN.Models.FoodItemMasters
+@{
+    ViewBag.Title = "FooditemMaster";
+    Layout = "~/Views/Shared/_RestaurantADMINLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-md-6">
+            <div class="card card-shadow mb-4">
+                <div class="card-header border-0">
+                    <div class="custom-title-wrap bar-primary">
+                        <div class="custom-title">@ViewBag.Title </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <a href="/Master/FooditemMasterList" class="btn btn-info" style="color:white;">FoodItem List</a><br /><br />
+
+
+                    @using (Html.BeginForm("FooditemMaster", "Master", new { area = "" }, FormMethod.Post, new { @class = "", id = "myForm", role = "form", autocomplete = "off", enctype = "multipart/form-data" }))
+                    {
+                        <div class="row">
+                            <div class="col-xl-4 col-md-12">
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control" id="pk_intFoodItemId" name="pk_intFoodItemId" value="@Model.pk_intFoodItemId" />
+
+                                    <label for="exampleInputEmail1">Food Item Name</label>
+                                    <input type="text" class="form-control" id="strFoodItemName" name="strFoodItemName" value="@Model.strFoodItemName" placeholder="Enter Name">
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">strFoodItemCode</label>
+                                    <input type="text" class="form-control" id="strFoodItemCode" name="strFoodItemCode" value="@Model.strFoodItemCode" placeholder="">
+                                </div>
+                            </div>
+
+                            <div class="col-xl-2col-md-12">
+                                <div class="form-group">
+                                    <ul>
+                                        <li>
+                                            <input id="bitIsAlcohol" type="checkbox" name="bitIsAlcohol" />IsAlcohol
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" name="bitIsJain" />bitIsJain
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-xl-2col-md-12">
+                                <div class="form-group">
+                                    <ul>
+                                        <li>
+                                            <input id="bitIsSpicy" type="checkbox" name="bitIsSpicy" />IsSpicy
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" name="bitIsVeg" />bitIsVeg
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-4 col-md-12">
+                                <div class="form-group">
+
+                                    <label for="exampleInputEmail1">DiningRate</label>
+                                    <input type="text" class="form-control" id="decDiningRate" name="decDiningRate" value="@Model.decDiningRate" placeholder="Enter Name">
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">TakeAwayRate</label>
+                                    <input type="number" class="form-control" id="decTakeAwayRate" name="decTakeAwayRate" value="@Model.decTakeAwayRate" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">DeliveryRate</label>
+                                    <input type="number" class="form-control" id="decDeliveryRate" name="decDeliveryRate" value="@Model.decDeliveryRate" placeholder="">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-4 col-md-12">
+                                <div class="form-group">
+
+                                    <label for="exampleInputEmail1">BarCharges</label>
+                                    <input type="text" class="form-control" id="decBarCharges" name="decBarCharges" value="@Model.decBarCharges" placeholder="Enter Name">
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">OptionalRate</label>
+                                    <input type="number" class="form-control" id="decOptionalRate" name="decOptionalRate" value="@Model.decOptionalRate" placeholder="Enter Mobail Number">
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">GSTTaxRate</label>
+                                    <input type="number" class="form-control" id="decGSTTaxRate" name="decGSTTaxRate" value="@Model.decGSTTaxRate" placeholder="Enter Mobail Number">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-4 col-md-12">
+                                <div class="form-group">
+
+                                    <label for="exampleInputEmail1">Food Item Category</label>
+                                    <select class="form-control show-tick" id="fk_intFoodItemCategoryId" name="fk_intFoodItemCategoryId">
+                                        <option value="0">-- Please select --</option>
+                                        @foreach (var item in ViewBag.CatagoryList)
+                                        {
+
+                                            <option value="@item.pk_intFoodItemCategoryId">@item.strCategoryName</option>
+
+                                        }
+                                        @*<option value="@Model.UM_Id">@Model.UM_Name</option>*@
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-12">
+                                <div class="form-group">
+                                    <label for="FoodItemImages">Food Photo</label>
+                                    <div class="form-line">
+                                        <input type="file" id="Imagesone" accept="image/*" name="Imagesone" class="form-control" onchange="PhotoShow(this)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-12">
+                                <div class="form-group">
+                                    <label for="FoodItemImagestwo">Food item Photo</label>
+                                    <div class="form-line">
+                                        <input type="file" id="Imagestwo" accept="image/*" name="Imagestwo" class="form-control" onchange="SecondPhotoshow(this)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-12">
+                                <div class="form-group">
+                                    <label for="imgPhotoShow">Photo</label>
+                                    <img src="@Model.Imagesone" alt="..." class="img-responsive img-thumbnail" id="imgPhotoShow" name="imgPhotoShow" style="height:100px;width:150px">
+                                </div>
+                            </div>
+
+                            <div class="col-xl-4 col-md-12">
+                                <div class="form-group">
+                                    <label for="imgPhotoShow">Photo</label>
+                                    <img src="@Model.Imagestwo" alt="..." class="img-responsive img-thumbnail" id="PhotoShowtwo" name="PhotoShowtwo" style="height:100px;width:150px">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-xl-3 col-md-4" style="margin-top:30px;">
+                                <div class="text-center">
+                                    @if(Model.pk_intFoodItemId>0)
+                                    {
+                                    <button type="submit" class="btn btn-purple" onclick="btnInsUp()">Update</button>
+
+                                    }
+                                    else
+                                    {
+                                    <button type="submit" class="btn btn-success" onclick="btnInsUp()">Submit</button>
+                                        
+                                    }  
+                                    <button type="submit" class="btn btn-warning" onclick="Refresh()">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                        <small style="color:red;">@ViewBag.Result</small>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function btnInsUp() {
+        if (Validation() == true) {
+            document.getElementById("myForm").submit();
+        }
+    }
+    function Validation() {
+        //if ($("#strWaiterName").val() == "") {
+        //    alert("plese Enter Waiter Name")
+        //    return false;
+        //}
+        //if ($("#strWaiterPhone").val() == "") {
+        //    alert("plese enter your valid mobail nuber ")
+        //    return false;
+        //}
+        //else {
+        //    return true;
+        //}
+        return true;
+    }
+    function PhotoShow(input) {
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#imgPhotoShow').attr('src', e.target.result);
+            };
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+    function SecondPhotoshow(input) {
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#PhotoShowtwo').attr('src', e.target.result);
+            };
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

@@ -1,0 +1,68 @@
+﻿
+
+
+@model RestraurantADMIN.Models.WaiterMaster
+
+@{
+    ViewBag.Title = "WaterMasterList";
+    Layout = "~/Views/Shared/_RestaurantADMINLayout.cshtml";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-md-12">
+            <div class="card card-shadow mb-4">
+                <div class="card-header border-0">
+                    <div class="custom-title-wrap bar-primary">
+                        <div class="custom-title">@ViewBag.Title</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <a href="/Master/WaterMaster" class="btn btn-info" style="color:white;">Add New</a><br /><br />
+
+                    <div class="table-responsive">
+                        <table id="data_table" class="table table-bordered table-striped" cellspacing="0">
+                            <thead>
+                                <tr style="text-align:center">
+                                    <th> Waiter Name</th>
+                                    <th> Mobail Number</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var data in Model.ListWaiterMaster)
+                                {
+                                    <tr style="text-align:center">
+                                        <td>@data.strWaiterName</td>
+                                        <td>@data.strWaiterPhone</td>
+                                        <td><input type="button" class="btn btn-success" value="Edit" onclick="Edit(@data.pk_intWaiterId)" /></td>
+                                        <td><input type="button" class="btn btn-danger" onclick="Delete(@data.pk_intWaiterId);" value="Delete" /></td>
+
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function Edit(pk_intWaiterId)
+    {
+        location.href = "/Master/WaterMaster?id=" + pk_intWaiterId
+    }
+    function Delete(pk_intWaiterId)
+    {
+        var id=confirm("Are You Sure");
+        if(id==true)
+        {
+            location.href = "/Master/WaterMasterDelete?id=" + pk_intWaiterId
+        }
+    }
+</script>
+
